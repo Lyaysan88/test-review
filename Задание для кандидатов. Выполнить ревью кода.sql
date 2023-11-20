@@ -77,12 +77,12 @@ begin
 	using (
 		select
 			cs_temp.ID_dbo_Customer
-			,cs_temp.ID_CustomerSystemType
-			,cs_temp.ID_Season
-			,cs_temp.DateBegin
-			,cs_temp.DateEnd
-			,cs_temp.ID_dbo_CustomerDistributor
-			,cs_temp.FlagActive
+			, cs_temp.ID_CustomerSystemType
+			, cs_temp.ID_Season
+			, cs_temp.DateBegin
+			, cs_temp.DateEnd
+			, cs_temp.ID_dbo_CustomerDistributor
+			, cs_temp.FlagActive
 		from #CustomerSeasonal as cs_temp
 	) as s on s.ID_dbo_Customer = cs.ID_dbo_Customer
 		and s.ID_Season = cs.ID_Season
@@ -93,9 +93,9 @@ begin
 		set
 
 			ID_CustomerSystemType = s.ID_CustomerSystemType
-			,DateEnd = s.DateEnd
-			,ID_dbo_CustomerDistributor = s.ID_dbo_CustomerDistributor
-			,FlagActive = s.FlagActive
+			, DateEnd = s.DateEnd
+			, ID_dbo_CustomerDistributor = s.ID_dbo_CustomerDistributor
+			, FlagActive = s.FlagActive
 	when not matched then
 		insert (ID_dbo_Customer
                       , ID_CustomerSystemType
@@ -121,15 +121,15 @@ begin
 		-- Формирование таблицы для отчетности
 		select top 100
 			Season as 'Сезон'
-			,UID_DS_Customer as 'UID Клиента'
-			,Customer as 'Клиент'
-			,CustomerSystemType as 'Тип клиента'
-			,UID_DS_CustomerDistributor as 'UID Дистрибьютора'
-			,CustomerDistributor as 'Дистрибьютор'
-			,isnull(format(try_cast(DateBegin as date), 'dd.MM.yyyy', 'ru-RU'), DateBegin) as 'Дата начала'
-			,isnull(format(try_cast(DateEnd as date), 'dd.MM.yyyy', 'ru-RU'), DateEnd) as 'Дата окончания'
-			,FlagActive as 'Активность'
-			,Reason as 'Причина'
+			, UID_DS_Customer as 'UID Клиента'
+			, Customer as 'Клиент'
+			, CustomerSystemType as 'Тип клиента'
+			, UID_DS_CustomerDistributor as 'UID Дистрибьютора'
+			, CustomerDistributor as 'Дистрибьютор'
+			, isnull(format(try_cast(DateBegin as date), 'dd.MM.yyyy', 'ru-RU'), DateBegin) as 'Дата начала'
+			, isnull(format(try_cast(DateEnd as date), 'dd.MM.yyyy', 'ru-RU'), DateEnd) as 'Дата окончания'
+			, FlagActive as 'Активность'
+			, Reason as 'Причина'
 		from #BadInsertedRows
 
 		return
