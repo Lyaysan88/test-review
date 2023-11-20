@@ -1,4 +1,5 @@
-create procedure syn.usp_ImportFileCustomerSeasonal @ID_Record int -- 1_Комментарий При наличии только одного параметра, этот параметр пишется на строке выполнения
+create procedure syn.usp_ImportFileCustomerSeasonal
+	@ID_Record int
 AS
 set nocount on
 begin
@@ -12,13 +13,12 @@ begin
 	where f.ID = @ID_Record
 		and f.FlagLoaded = cast(1 as bit)
 	)
-	BEGIN -- 3_Комментарий На одном уровне с `if` и `begin/end`
+		begin
 			set @ErrorMessage = 'Ошибка при загрузке файла, проверьте корректность данных'
 
 			raiserror(@ErrorMessage, 3, 1)
-			-- 1_Комментарий Пустая строка перед return
 			return
-	end-- 3_Комментарий На одном уровне с `if` и `begin/end`
+		end
 
 	--Чтение из слоя временных данных
 	select
@@ -87,13 +87,11 @@ begin
 	when matched 
 		and t.ID_CustomerSystemType <> s.ID_CustomerSystemType then
 		update
-		SET
-		-- Перечисление всех полей с новой строки и одним отступом
+		set
 			ID_CustomerSystemType = s.ID_CustomerSystemType
 			,DateEnd = s.DateEnd
 			,ID_dbo_CustomerDistributor = s.ID_dbo_CustomerDistributor
 			,FlagActive = s.FlagActive
-			-- 2_Комментарий  При написании update запроса, необходимо использовать конструкцию с from
 	when not matched then
 		insert (ID_dbo_Customer, ID_CustomerSystemType, ID_Season, DateBegin, DateEnd, ID_dbo_CustomerDistributor, FlagActive)
 		values (s.ID_dbo_Customer, s.ID_CustomerSystemType, s.ID_Season, s.DateBegin, s.DateEnd, s.ID_dbo_CustomerDistributor, s.FlagActive)
