@@ -86,7 +86,7 @@ begin
 		and s.DateBegin = cs.DateBegin
 	when matched 
 		and t.ID_CustomerSystemType <> s.ID_CustomerSystemType then
-		update
+		update from 
 		set
 			ID_CustomerSystemType = s.ID_CustomerSystemType
 			,DateEnd = s.DateEnd
