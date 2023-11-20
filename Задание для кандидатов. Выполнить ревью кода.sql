@@ -16,6 +16,7 @@ begin
 	    set @ErrorMessage = 'Ошибка при загрузке файла, проверьте корректность данных'
 
 	    raiserror(@ErrorMessage, 3, 1)
+
 	    return
 	end
 
