@@ -6,7 +6,7 @@ begin
 	declare @ErrorMessage varchar(max)
 
 -- Проверка на корректность загрузки
-	if not exists (
+	if not exists(
 	select 1
 	from syn.ImportFile as f
 	where f.ID = @ID_Record
@@ -17,7 +17,7 @@ begin
 
 	    raiserror(@ErrorMessage, 3, 1)
 
-	    return
+	    return 
 	end
 
 	--Чтение из слоя временных данных
@@ -88,6 +88,7 @@ begin
 		and t.ID_CustomerSystemType <> s.ID_CustomerSystemType then
 		update from 
 		set
+
 			ID_CustomerSystemType = s.ID_CustomerSystemType
 			,DateEnd = s.DateEnd
 			,ID_dbo_CustomerDistributor = s.ID_dbo_CustomerDistributor
