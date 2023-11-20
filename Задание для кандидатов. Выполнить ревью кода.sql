@@ -13,11 +13,11 @@ begin
 		and f.FlagLoaded = cast(1 as bit)
 	)
         begin
-			set @ErrorMessage = 'Ошибка при загрузке файла, проверьте корректность данных'
+	    set @ErrorMessage = 'Ошибка при загрузке файла, проверьте корректность данных'
 
-			raiserror(@ErrorMessage, 3, 1)
-			return
-		end
+	    raiserror(@ErrorMessage, 3, 1)
+	    return
+	end
 
 	--Чтение из слоя временных данных
 	select
